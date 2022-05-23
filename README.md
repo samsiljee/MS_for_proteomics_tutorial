@@ -3,9 +3,13 @@ Repository for a tutorial on analysing MS data in R
 
 ## Links
 Tutorial on Youtube; https://www.youtube.com/watch?v=GlTRN2jbEa4
+
 Github page; https://lgatto.github.io/RforProteomics/articles/RforProteomics.html
+
 Original article; https://analyticalsciencejournals.onlinelibrary.wiley.com/doi/10.1002/pmic.201400392
+
 Bioconductor; https://www.bioconductor.org/packages/release/data/experiment/vignettes/RforProteomics/inst/doc/RProtVis.html
+
 R for Mass Spec project; https://www.rformassspectrometry.org/
 
 ## Notes
@@ -20,5 +24,7 @@ MS data is formatted as a data table, with one scan per row. The columns cover v
 3. Retention time
 4. Other annotations
 5. Matrixes of raw plots, consiting of two values:
+
 a. M/Z values
+
 b. Intensity scores
