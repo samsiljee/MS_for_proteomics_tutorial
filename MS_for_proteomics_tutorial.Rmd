@@ -1,0 +1,17 @@
+---
+title: "MS_for_proteomics_tutorial"
+author: "Sam Siljee"
+date: "24/05/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r initial}
+#Install Spectra using BiocManager
+library("Spectra")
+
+```
+
