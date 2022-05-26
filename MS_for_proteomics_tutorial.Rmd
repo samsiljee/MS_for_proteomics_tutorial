@@ -9,9 +9,50 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r initial}
+```{r packages}
 #Install Spectra using BiocManager
 library("Spectra")
+library("rpx")
+```
+## Starting with Spectra
+```{r starting with spectra}
+# first part of MS data
+spd <- DataFrame(msLevel = c(1L, 2L),
+          rtime = c(10.1, 24))
+spd
+
+#still requires raw data to be more like MS data. Use list
+
+spd$mz <- list(c(100, 103.2, 104.3, 106.5),
+     c(45.6, 120.4, 190.2))
+
+spd$intensity <- list(c(200, 400, 34.2, 17),
+     c(12.3, 15.2, 6.8))
+
+spd
+
+#simple dataframe set up, nothing specific to MS yet. Now we can use the `Spectra` package to convert generic dataframe to object specific to MS
+
+sp <- Spectra(spd)
+
+#sp is an object of class "Spectra" which is specific to MS datasets
+sp
+
+#As can be seen, most of the variables are not populated
+spectraVariables(sp)
+
+#The values of these variables can be accessed
+spectraData(sp)
+
+# as well as individual spectra
+peaksData(sp)
+
+peaksData(sp)[[1]]
+```
+
+## Getting raw MS data from a public repository
+```{r getting raw MS data from a public repository}
+px1 <- PXDataset2("PXD000001")
 
 ```
 
