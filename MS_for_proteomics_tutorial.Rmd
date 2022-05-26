@@ -54,5 +54,16 @@ peaksData(sp)[[1]]
 ```{r getting raw MS data from a public repository}
 px1 <- PXDataset2("PXD000001")
 
+#`px1` is not a dataset in and of itself, however it is a method to query the EBI database
+px1
+
+#review files in px1, we are interested in #7
+pxfiles(px1)
+
+#create a variable for file #7
+f <- "TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML"
+
+#download results
+mzf <- pxget(px1, f)
 ```
 
