@@ -53,7 +53,9 @@ peaksData(sp)[[1]]
 
 ## Getting raw MS data from a public repository
 ```{r getting raw MS data from a public repository}
-#The following code from the tutorial does not run, likely due to server issues with the repository. I have commented it out for now, downloaded the datasets seperately, and loaded them from there.
+#The following code from the tutorial does not run, likely due to server issues with the repository. I have commented it out for now, downloaded the datasets separately, and loaded them from there. Note that the 
+
+
 #px1 <- PXDataset("PXD000001")
 
 #`px1` is not a dataset in and of itself, however it is a method to query the EBI database
