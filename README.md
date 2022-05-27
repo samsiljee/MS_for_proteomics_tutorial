@@ -1,5 +1,5 @@
 # MS_for_proteomics_tutorial
-Repository for a tutorial on analysing MS data in R
+Repository for a tutorial on analysing MS data in R, thanks to Dr Laurent Gatto for an excellent tutorial. Note that in the tutorial the `PXDataset` function is used, however I could not get this function to work (likely temporary issue with the PRIDE server). Instead I have downloaded the data from PRIDE via ftp, and loaded in the same way using `Spectra` from the locally saved copy.
 
 ## Links
 Tutorial on Youtube; https://www.youtube.com/watch?v=GlTRN2jbEa4

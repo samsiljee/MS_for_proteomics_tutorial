@@ -9,14 +9,14 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r packages}
+```{r packages, include=FALSE}
 #Install Spectra using BiocManager
 library("Spectra")
 library("rpx")
 library("mzR")
 ```
 ## Starting with Spectra
-```{r starting with spectra}
+```{r starting with spectra, include=FALSE}
 # first part of MS data
 spd <- DataFrame(msLevel = c(1L, 2L),
           rtime = c(10.1, 24))
@@ -52,8 +52,8 @@ peaksData(sp)[[1]]
 ```
 
 ## Getting raw MS data from a public repository
-```{r getting raw MS data from a public repository}
-#The following code from the tutorial does not run, likely due to server issues with the repository. I have commented it out for now, downloaded the datasets separately, and loaded them from there. Note that the 
+```{r getting raw MS data from a public repository, include=FALSE}
+#The following code from the tutorial does not run, likely due to server issues with the repository. I have commented it out for now, downloaded the datasets separately, and loaded them from there. Note that the dataset is too large to load to github, so I have added it to the gitignore
 
 
 #px1 <- PXDataset("PXD000001")
@@ -76,12 +76,74 @@ peaksData(sp)[[1]]
 #setting up the actual dataset, using the download approach as described above. Note that this will overwrite the `sp` variable previously defined
 sp <- Spectra("~/Coding/MS_for_proteomics_tutorial/data/TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML")
 
-#The values of these variables can be accessed, as with the small practice dataset
-spectraData(sp)
+#The values of these variables can be accessed, as with the small practice dataset, note that more variables are actually included
+spectraVariables(sp)
 
 # as well as individual spectra
 peaksData(sp)
 
 peaksData(sp)[[1]]
+
+#check that there are indeed 7434 spectra in this dataset
+length(sp)
+
+#look at the first few spectra
+spectraData(sp)
+
+#you can use a function to access specific aspects
+msLevel(sp)
+
+#table the number of MS1 and MS2 scans
+table(msLevel(sp))
+
+#Can also look at retention times
+rtime(sp)
+
+#and we can look at the range of retention time, note that the first data point does not have any useful data
+range(rtime(sp))
+
+#can also filter by certain variables
+sp2 <- filterMsLevel(sp, 2)
+
+sp2
+
+#now to visualise the chromatogram. the `tic` function gives total ion current. the chromatogram only makes sense for MS1 data, so first extract the MS1 only
+sp1 <- filterMsLevel(sp, 1)
+
+#get retention times
+rtime(sp1)
+
+#get total ion currents
+tic(sp1)
+
+#then get the retention times, and ion times and plot them
+plot(rtime(sp1), tic(sp1), type = "l")
+
+#can also subset to select a specific spectrum, works like a list
+#for example extracting spectrum number 1000, will give a Spectra object of length 1, with the thousandth spectrum
+sp[1000]
+
+#Or select scans from 1000 to 2000
+sp[1000:2000]
+
+#there is also a function to plot a spectrum, this give the classic m/z vs intensity plot
+plotSpectra(sp[1000])
+
+#could also create this plot manually, now that we know how to access this data, as follows
+#create a Spectra object of scan number 1000
+sp1000 <- sp[1000]
+
+#extract the mz values, this creates a list of length 1, so select the first list
+mz(sp1000)[[1]] 
+
+#extract the intensities, as above
+intensity(sp1000)[[1]]
+
+#and plot them
+plot(mz(sp1000)[[1]],
+     intensity(sp1000)[[1]],
+     type = "h")
+
+
 ```
 
