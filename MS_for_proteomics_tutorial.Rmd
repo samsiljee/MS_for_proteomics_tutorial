@@ -13,6 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 #Install Spectra using BiocManager
 library("Spectra")
 library("rpx")
+library("mzR")
 ```
 ## Starting with Spectra
 ```{r starting with spectra}
@@ -52,18 +53,33 @@ peaksData(sp)[[1]]
 
 ## Getting raw MS data from a public repository
 ```{r getting raw MS data from a public repository}
-px1 <- PXDataset2("PXD000001")
+#The following code from the tutorial does not run, likely due to server issues with the repository. I have commented it out for now, downloaded the datasets seperately, and loaded them from there.
+#px1 <- PXDataset("PXD000001")
 
 #`px1` is not a dataset in and of itself, however it is a method to query the EBI database
-px1
+#px1
 
 #review files in px1, we are interested in #7
-pxfiles(px1)
+#pxfiles(px1)
 
 #create a variable for file #7
-f <- "TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML"
+#f <- "TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML"
 
 #download results
-mzf <- pxget(px1, f)
+#mzf <- pxget(px1, f)
+
+#mzf is path to raw dataset
+#mzf
+
+#setting up the actual dataset, using the download approach as described above. Note that this will overwrite the `sp` variable previously defined
+sp <- Spectra("~/Coding/MS_for_proteomics_tutorial/data/TMT_Erwinia_1uLSike_Top10HCD_isol2_45stepped_60min_01-20141210.mzML")
+
+#The values of these variables can be accessed, as with the small practice dataset
+spectraData(sp)
+
+# as well as individual spectra
+peaksData(sp)
+
+peaksData(sp)[[1]]
 ```
 
