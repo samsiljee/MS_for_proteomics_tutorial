@@ -147,3 +147,22 @@ plot(mz(sp1000)[[1]],
 
 ```
 
+```{r extra code that I experimented with, include=FALSE}
+#I wanted to use the data to check whether it is indeed the top 10 precursors that get taken for MS2 scans.
+
+#Checking again the numbers of the different MS levels
+table(msLevel(sp))
+
+#Dividing the number of MS2 scans by the number of MS1 scans to get the ratio
+sum(msLevel(sp)==2)/sum(msLevel(sp)==1)
+
+#This gives a ratio well below the expected 10. Then I remebered that the scans at the start of the run are not useful, and will therefore not have any MS2 scans. Therefore I will likely get a more realistic result if I filter for scans done during the bulk of the run. Looking at the chromatogram again, so we can choose what range to select
+plot(rtime(sp1), tic(sp1), type = "l")
+
+#retention time between 1300 and 2800 looks good, so I'll filter for that. First create a new fitlered Spectra object
+spfilt <- filterRt(sp, c(1300, 2800))
+
+#then get a ratio again. Looks much better!
+sum(msLevel(spfilt)==2)/sum(msLevel(spfilt)==1)
+```
+

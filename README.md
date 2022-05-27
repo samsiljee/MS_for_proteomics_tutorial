@@ -28,3 +28,5 @@ MS data is formatted as a data table, with one scan per row. The columns cover v
 a. M/Z values
 
 b. Intensity scores
+
+Why only the top 10 (or 20 on a newer machine) MS2 scans per MS1? The HPLC continues to run in the time it takes to get MS2 scans, therefore it is a compromise between acquiring lots of MS2 scans, and good MS1 scans

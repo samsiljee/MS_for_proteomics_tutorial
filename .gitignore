@@ -27,3 +27,4 @@ vignettes/*.pdf
 # R Environment Variables
 .Renviron
 data
+MS_for_proteomics_tutorial.html
