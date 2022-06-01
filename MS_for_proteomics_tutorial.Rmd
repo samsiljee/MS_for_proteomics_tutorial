@@ -9,12 +9,15 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Packages
 ```{r packages, include=FALSE}
 #Install Spectra using BiocManager
 library("Spectra")
 library("rpx")
 library("mzR")
+library("tidyverse")
 ```
+
 ## Starting with Spectra
 ```{r starting with spectra, include=FALSE}
 # first part of MS data
@@ -143,11 +146,63 @@ intensity(sp1000)[[1]]
 plot(mz(sp1000)[[1]],
      intensity(sp1000)[[1]],
      type = "h")
+```
 
+## Visualisation
+```{r visualisation, include=FALSE}
+#making a chromatogram, code previously used, however this time adding a red line for the selected ion (for MS2)
+plot(rtime(sp1), tic(sp1), type = "l")
+abline(v = rtime(sp)[2807], col = "red")
+
+#Now using tidyverse to make a chromatogram, another way to get the same plot. First to filter for MS1, then extract Dataframe (capital D denotes Bioconductor), then as tibble to use in ggplot for more flexibility
+sp %>%
+  filterMsLevel(1) %>%
+  spectraData() %>%
+  as_tibble() %>%
+  ggplot(aes(x = rtime, y = totIonCurrent)) +
+    geom_line() +
+    geom_vline(xintercept = rtime(sp[2807]), colour = "red")
+
+#now to extract the set of scans related to scan #2807. Just to review it first briefly. Note that it's MS1 level
+sp[2807]
+
+#note that following scan 2807, there a set of MS2 scans which originate from scan 2807
+sp[2807:2817]
+
+#however there is a specific function to filter for scans related to a particular MS1 scan
+filterPrecursorScan(sp, 2807)
+
+#creating a subset
+spx <- filterPrecursorScan(sp, 2807)
+
+#starting easy, plotting the MS1 scan
+plotSpectra(spx[1])
+
+#now to highlight the selected peaks. First extract the MZ values of the precursors. there are 11 scans in spx, so there will be 11 results. one is NA because it is the MS1 scan
+precursorMz(spx)
+
+#adding the two together, removing the first NA of the precursor MZ values, limiting the X values, highlighting the first MS2 scan in red
+plotSpectra(spx[1], xlim = c(400, 1000))
+abline(v = precursorMz(spx)[-1], col = "gray")
+abline(v = precursorMz(spx)[2], col = "red")
+
+#zooming in further, by limiting the x axis further. Line graph is more appropriate at this level
+plotSpectra(spx[1], xlim = c(521, 522), type = "l")
+abline(v = precursorMz(spx)[-1], col = "gray")
+abline(v = precursorMz(spx)[2], col = "red")
+
+#now to plot the MS2 scans
+#first filter for MS2
+plotSpectra(filterMsLevel(spx, 2))
+```
+
+##Sequence identification
+```{r sequence identification, include = FALSE}
 
 ```
 
-```{r extra code that I experimented with, include=FALSE}
+## Extra code
+```{r extra code that I experimented with, echo=FALSE}
 #I wanted to use the data to check whether it is indeed the top 10 precursors that get taken for MS2 scans.
 
 #Checking again the numbers of the different MS levels
@@ -164,5 +219,21 @@ spfilt <- filterRt(sp, c(1300, 2800))
 
 #then get a ratio again. Looks much better!
 sum(msLevel(spfilt)==2)/sum(msLevel(spfilt)==1)
+
+#Reproducing the graph of MS1 spectrum with highlighted ions selected for MS2, but in ggplot rather than the plot spectrum function
+data.frame(mz = mz(spx[1])[[1]], intensity = intensity(spx[1])[[1]]) %>%
+  ggplot() +
+  geom_linerange(aes(x = mz, ymax = intensity, ymin = 0)) +
+  geom_vline(xintercept = precursorMz(spx[-1]), colour = "gray") +
+  geom_vline(xintercept = precursorMz(spx[2]), colour = "red") +
+  xlim(400, 1000)
+
+#Zoomed in version
+data.frame(mz = mz(spx[1])[[1]], intensity = intensity(spx[1])[[1]]) %>%
+  ggplot() +
+  geom_line(aes(x = mz, y = intensity)) +
+  geom_vline(xintercept = precursorMz(spx[-1]), colour = "gray") +
+  geom_vline(xintercept = precursorMz(spx[2]), colour = "red") +
+  xlim(521, 522)
 ```
 

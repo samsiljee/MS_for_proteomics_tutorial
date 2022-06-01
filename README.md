@@ -6,6 +6,8 @@ Tutorial on Youtube; https://www.youtube.com/watch?v=GlTRN2jbEa4
 
 Github page; https://lgatto.github.io/RforProteomics/articles/RforProteomics.html
 
+Github tutorial; https://rformassspectrometry.github.io/docs/
+
 Original article; https://analyticalsciencejournals.onlinelibrary.wiley.com/doi/10.1002/pmic.201400392
 
 Bioconductor; https://www.bioconductor.org/packages/release/data/experiment/vignettes/RforProteomics/inst/doc/RProtVis.html
