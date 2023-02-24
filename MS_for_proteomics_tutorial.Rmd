@@ -55,6 +55,7 @@ peaksData(sp)[[1]]
 ```
 
 ## Getting raw MS data from a public repository
+
 ```{r getting raw MS data from a public repository, include=FALSE}
 #The following code from the tutorial does not run, likely due to server issues with the repository. I have commented it out for now, downloaded the datasets separately, and loaded them from there. Note that the dataset is too large to load to github, so I have added it to the gitignore
 
